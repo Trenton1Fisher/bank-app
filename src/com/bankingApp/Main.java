@@ -1,9 +1,13 @@
+package com.bankingApp;
+
+import com.bankingApp.owner.Owner;
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         boolean running = true;
+        Owner userOwner = new Owner();
 
         System.out.println("Welcome to the CLI Banking System!");
 
@@ -17,13 +21,21 @@ public class Main {
             int choice = scanner.nextInt();
             switch (choice) {
                 case 1:
-                    System.out.println("Viewing banks...");
+                    userOwner.viewBanks();
                     break;
                 case 2:
-                    System.out.println("Viewing net worth...");
+                    System.out.println("Your current overall Networth: " + userOwner.getOwnerNetworth());
                     break;
                 case 3:
-                    System.out.println("Advancing to next day...");
+                    
+                    boolean newBank = userOwner.goToNextDay();
+                    if(newBank){
+                        System.out.println("Congratulations! You can now purchase another bank.");
+                        System.out.print("Please provide the name of your new bank: ");
+                        String newBankName = scanner.nextLine();
+                        userOwner.makeNewBank(newBankName);
+                        System.out.println("You have successfully purchased: " + newBankName);
+                    }
                     break;
                 case 4:
                     running = false;
